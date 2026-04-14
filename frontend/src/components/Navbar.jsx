@@ -73,7 +73,7 @@ const Navbar = () => {
         <nav className={`navbar ${scrolled ? 'scrolled glass-panel' : ''}`}>
             <div className="container nav-container">
                 <Link to="/" className="nav-logo title-gradient">
-                    Shopnix.
+                    Shopnix Fox Nuts
                 </Link>
 
                 <div className="nav-links desktop-only">

@@ -11,7 +11,7 @@ const Footer = () => {
             <div className="container">
                 <div className="footer-grid">
                     <div className="footer-brand">
-                        <h2 className="title-gradient footer-logo">Shopnix</h2>
+                        <h2 className="title-gradient footer-logo">Shopnix Fox Nuts</h2>
                         <p className="footer-tagline">
                             India's finest Fox Nuts (Makhana) — 100% natural, roasted with love and delivered fresh to your doorstep.
                         </p>
@@ -59,7 +59,7 @@ const Footer = () => {
 
                 <div className="footer-bottom">
                     <p>
-                        &copy; {new Date().getFullYear()} Shopnix. Crafted with <Heart size={14} className="heart-icon" /> for you.
+                        &copy; {new Date().getFullYear()} Shopnix Fox Nuts. Crafted with <Heart size={14} className="heart-icon" /> for you.
                     </p>
                     <div className="footer-legal">
                         <a href="#">Privacy Policy</a>
