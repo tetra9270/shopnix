@@ -1,0 +1,92 @@
+.occasion-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.occasion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.occasion-card {
+    position: relative;
+    height: 400px;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(212, 154, 137, 0.1);
+    isolation: isolate;
+}
+
+.occasion-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.occasion-card:hover .occasion-image {
+    transform: scale(1.08);
+}
+
+.occasion-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(45, 36, 36, 0.8) 0%, rgba(45, 36, 36, 0) 70%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 30px;
+    transition: background 0.3s ease;
+}
+
+.occasion-card:hover .occasion-overlay {
+    background: linear-gradient(to top, rgba(45, 36, 36, 0.9) 0%, rgba(45, 36, 36, 0.2) 100%);
+}
+
+.occasion-content {
+    color: #fff;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.occasion-card:hover .occasion-content {
+    transform: translateY(0);
+}
+
+.occasion-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.occasion-content p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.outline-btn-white {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.occasion-card:hover .outline-btn-white {
+    opacity: 1;
+}
+
+.outline-btn-white:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,164 @@
+.collection-page {
+    padding-bottom: 80px;
+}
+
+/* Sale Banner */
+.collection-sale-banner {
+    margin-top: 80px;
+    background: linear-gradient(135deg, #fce4ec 0%, #faaab9 100%);
+    padding: 30px 0;
+    text-align: center;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 10px 30px rgba(250, 170, 185, 0.2);
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.sale-content {
+    position: relative;
+    z-index: 2;
+}
+
+.sale-tag {
+    background: #fff;
+    color: var(--primary-color);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.sale-content h2 {
+    font-size: 2.2rem;
+    color: var(--text-main);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.sale-content p {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.breadcrumbs a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.breadcrumbs a:hover {
+    color: var(--primary-color);
+}
+
+.breadcrumb-separator {
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.breadcrumb-current {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+/* Toolbar (Filters & Sort) */
+.collection-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-color-glass);
+    border: var(--glass-border);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+}
+
+.toolbar-info {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid rgba(212, 154, 137, 0.3);
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toolbar-btn:hover {
+    background: rgba(212, 154, 137, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* Product Badges */
+.product-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+}
+
+.badge-sale {
+    background: rgba(255, 107, 107, 0.9);
+    color: white;
+}
+
+.badge-new {
+    background: rgba(250, 170, 185, 0.9);
+    color: white;
+}
+
+.badge-bestseller {
+    background: rgba(212, 175, 55, 0.9);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .collection-toolbar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .toolbar-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
