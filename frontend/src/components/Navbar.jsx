@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, User, Menu, X, LogOut, Crown } from 'lucide-react';
+import { ShoppingBag, User, Menu, X, LogOut, Crown, LayoutDashboard } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import CartDrawer from './CartDrawer';
 import './Navbar.css';
 
 const Navbar = () => {
+    const navigate = useNavigate();
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [userInfo, setUserInfo] = useState(null);
@@ -86,27 +88,27 @@ const Navbar = () => {
                 <div className="nav-actions">
                     {userInfo ? (
                         <div className="user-nav-premium">
-                            <div className="user-profile-handle">
+                            <div className="user-profile-handle" onClick={() => navigate('/profile')} style={{cursor: 'pointer'}}>
                                 <div className="user-avatar-mini">
                                     <Crown size={14} />
                                 </div>
                                 <span className="user-name-premium">
                                     {(() => {
                                         if (userInfo) {
-                                            console.log(userInfo)
-                                            // Priority: 1. name, 2. user.name, 3. first part of email
                                             const name = userInfo.name || (userInfo.user && userInfo.user.name);
-                                            if (name) {
-                                                return name.split(' ')[0];
-                                            }
-                                            if (userInfo.email) {
-                                                return userInfo.email.split('@')[0];
-                                            }
+                                            if (name) return name.split(' ')[0];
+                                            if (userInfo.email) return userInfo.email.split('@')[0];
                                         }
                                         return 'Member';
                                     })()}
                                 </span>
                             </div>
+                            {userInfo.isAdmin && (
+                                <Link to="/admin/dashboard" className="admin-pill-link" title="Admin Panel">
+                                    <LayoutDashboard size={16} />
+                                    <span>Admin</span>
+                                </Link>
+                            )}
                             <button className="logout-btn-minimal" onClick={logoutHandler} title="Logout">
                                 <LogOut size={18} />
                             </button>

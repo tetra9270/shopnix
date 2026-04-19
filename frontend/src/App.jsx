@@ -17,6 +17,14 @@ import CheckoutPage from './components/CheckoutPage';
 import ProfilePage from './components/ProfilePage';
 
 
+import AdminRoute from './components/AdminRoute';
+import AdminLayout from './components/AdminLayout';
+import AdminDashboard from './components/AdminDashboard';
+import AdminOrders from './components/AdminOrders';
+import AdminProducts from './components/AdminProducts';
+import AdminUsers from './components/AdminUsers';
+
+
 function HomePage() {
   return (
     <>
@@ -35,39 +43,27 @@ function App() {
     <Router>
       <CartProvider>
         <div className="app">
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={
-                <>
-                  <About />
-                  <Footer />
-                </>
-              } />
-              <Route path="/contact" element={
-                <>
-                  <Contact />
-                  <Footer />
-                </>
-              } />
-              <Route path="/new-arrivals" element={
-                <>
-                  <NewArrivals />
-                  <Footer />
-                </>
-              } />
-              <Route path="/collection/:collectionId" element={
-                <>
-                  <CollectionPage />
-                  <Footer />
-                </>
-              } />
-              <Route path="/login" element={<LoginSignup />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Routes>
-          </main>
+          <Routes>
+            {/* Public/Customer Routes */}
+            <Route path="/" element={<><Navbar /><main><HomePage /></main></>} />
+            <Route path="/about" element={<><Navbar /><main><About /><Footer /></main></>} />
+            <Route path="/contact" element={<><Navbar /><main><Contact /><Footer /></main></>} />
+            <Route path="/new-arrivals" element={<><Navbar /><main><NewArrivals /><Footer /></main></>} />
+            <Route path="/collection/:collectionId" element={<><Navbar /><main><CollectionPage /><Footer /></main></>} />
+            <Route path="/login" element={<><Navbar /><main><LoginSignup /></main></>} />
+            <Route path="/checkout" element={<><Navbar /><main><CheckoutPage /></main></>} />
+            <Route path="/profile" element={<><Navbar /><main><ProfilePage /></main></>} />
+
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="products" element={<AdminProducts />} />
+                <Route path="users" element={<AdminUsers />} />
+              </Route>
+            </Route>
+          </Routes>
         </div>
       </CartProvider>
     </Router>

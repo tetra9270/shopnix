@@ -197,3 +197,35 @@
         display: none;
     }
 }
+
+.admin-pill-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(181, 122, 112, 0.1);
+    border: 1px solid rgba(181, 122, 112, 0.3);
+    border-radius: 100px;
+    color: #b57a70;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.admin-pill-link:hover {
+    background: #b57a70;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(181, 122, 112, 0.2);
+}
+
+@media (max-width: 768px) {
+    .admin-pill-link span {
+        display: none;
+    }
+    
+    .admin-pill-link {
+        padding: 0.4rem;
+    }
+}
