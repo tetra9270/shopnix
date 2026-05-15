@@ -12,6 +12,7 @@ import {
     Clock
 } from 'lucide-react';
 import API from '../services/api';
+import { getImageUrl } from '../utils/helpers';
 import './AdminDashboard.css';
 
 const StatCard = ({ title, value, icon: Icon, trend, color }) => (
@@ -49,15 +50,16 @@ const AdminDashboard = () => {
     const [recentOrders, setRecentOrders] = useState([]);
     const [lowStockProducts, setLowStockProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                // Fetch all data
+                // Fetch all data in parallel — if any fails, we catch gracefully
                 const [ordersRes, usersRes, productsRes] = await Promise.all([
-                    API.get('/api/orders/admin/all'),
-                    API.get('/api/users'),
-                    API.get('/api/products')
+                    API.get('/api/orders/admin/all').catch(() => ({ data: [] })),
+                    API.get('/api/users').catch(() => ({ data: [] })),
+                    API.get('/api/products').catch(() => ({ data: [] }))
                 ]);
 
                 const totalSales = (ordersRes.data || [])
@@ -80,6 +82,7 @@ const AdminDashboard = () => {
                 setLowStockProducts(lowStock);
             } catch (error) {
                 console.error('Failed to fetch stats:', error);
+                setError('Could not connect to backend. Make sure the API server is running.');
             } finally {
                 setLoading(false);
             }
@@ -89,6 +92,7 @@ const AdminDashboard = () => {
     }, []);
 
     if (loading) return <div className="admin-loading">Curating your royal data...</div>;
+    if (error) return <div className="admin-loading" style={{color:'#e88', textAlign:'center', padding:'3rem'}}>{error}</div>;
 
     return (
         <div className="admin-dashboard">
@@ -183,7 +187,7 @@ const AdminDashboard = () => {
                                 {lowStockProducts.map(p => (
                                     <li key={p._id} className="low-stock-item">
                                         <div className="item-info">
-                                            <img src={p.image || (p.images && p.images[0]) || '/images/sample.jpg'} alt={p.name} />
+                                            <img src={getImageUrl(p.image || (p.images && p.images[0]) || '')} alt={p.name} />
                                             <span>{p.name}</span>
                                         </div>
                                         <div className="item-stock">

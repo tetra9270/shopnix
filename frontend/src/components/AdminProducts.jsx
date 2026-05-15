@@ -12,14 +12,8 @@ import {
     Tag
 } from 'lucide-react';
 import API from '../services/api';
+import { getImageUrl } from '../utils/helpers';
 import './AdminProducts.css';
-
-const getImageUrl = (url) => {
-    if (!url) return '/images/sample.jpg';
-    if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
-    if (url.startsWith('/uploads')) return `http://localhost:5000${url}`;
-    return url;
-};
 
 const AdminProducts = () => {
     const [products, setProducts] = useState([]);

@@ -1,46 +1,30 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
 const router = express.Router();
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '../uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
+// Configure Cloudinary using env vars
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// Storage engine
-const storage = multer.diskStorage({
-    destination(req, file, cb) {
-        cb(null, uploadDir);
+// Use Cloudinary as storage engine — no local disk needed
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: 'shopnix-products',
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+        transformation: [{ width: 800, height: 800, crop: 'limit', quality: 'auto' }],
     },
-    filename(req, file, cb) {
-        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-    }
 });
 
-function checkFileType(file, cb) {
-    const filetypes = /jpg|jpeg|png|webp/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
+const upload = multer({ storage });
 
-    if (extname && mimetype) {
-        return cb(null, true);
-    } else {
-        cb(new Error('Images only!'));
-    }
-}
-
-const upload = multer({
-    storage,
-    fileFilter: function (req, file, cb) {
-        checkFileType(file, cb);
-    }
-});
-
-// @desc    Upload multiple images
+// @desc    Upload multiple images to Cloudinary
 // @route   POST /api/upload
 // @access  Private/Admin
 router.post('/', upload.array('images', 5), (req, res) => {
@@ -48,11 +32,12 @@ router.post('/', upload.array('images', 5), (req, res) => {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ message: 'No files uploaded' });
         }
-        
-        const filePaths = req.files.map(file => `/uploads/${file.filename}`);
+
+        // Cloudinary returns secure_url — full HTTPS URL, works everywhere
+        const imageUrls = req.files.map(file => file.path);
         res.json({
             message: 'Images Uploaded',
-            images: filePaths
+            images: imageUrls
         });
     } catch (error) {
         console.error(error);

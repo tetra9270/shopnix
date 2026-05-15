@@ -12,6 +12,7 @@ import {
     Filter
 } from 'lucide-react';
 import API from '../services/api';
+import { getImageUrl } from '../utils/helpers';
 import './AdminOrders.css';
 
 const AdminOrders = () => {
@@ -169,7 +170,7 @@ const AdminOrders = () => {
                                                                 <div className="items-list">
                                                                     {order.orderItems.map((item, idx) => (
                                                                         <div key={idx} className="order-item-mini">
-                                                                            <img src={item.image} alt={item.name} />
+                                                                            <img src={getImageUrl(item.image)} alt={item.name} />
                                                                             <div>
                                                                                 <p className="item-name">{item.name}</p>
                                                                                 <p className="item-meta">Qty: {item.qty} | ₹{item.price}</p>
