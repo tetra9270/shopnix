@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Instagram, Check } from 'lucide-react';
 import QuickView from './QuickView';
-import './NewArrivals.css'; // Requires custom styles for the masonry lookbook
-import './CollectionPage.css'; // Reusing some base styles
+import API from '../services/api';
+import { getImageUrl } from '../utils/helpers';
+import './NewArrivals.css';
+import './CollectionPage.css';
 
 const newArrivalsData = [
     {
@@ -52,9 +54,20 @@ const newArrivalsData = [
 
 const NewArrivals = () => {
     const [quickViewProduct, setQuickViewProduct] = useState(null);
+    const [newArrivals, setNewArrivals] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        const fetchArrivals = async () => {
+            try {
+                const { data } = await API.get('/api/products');
+                // Assume newest are at the end, so reverse and take top 5
+                setNewArrivals(data.reverse().slice(0, 5));
+            } catch (error) {
+                console.error("Error fetching new arrivals", error);
+            }
+        };
+        fetchArrivals();
     }, []);
 
     return (
@@ -80,7 +93,7 @@ const NewArrivals = () => {
 
                 {/* Magazine-Style Lookbook Grid */}
                 <div className="lookbook-grid">
-                    {newArrivalsData.map((product, index) => (
+                    {newArrivals.map((product, index) => (
                         <motion.div
                             key={product._id}
                             className="lookbook-item"
@@ -90,7 +103,7 @@ const NewArrivals = () => {
                             transition={{ duration: 0.6, delay: index * 0.1 }}
                             onClick={() => setQuickViewProduct(product)}
                         >
-                            <img src={product.image} alt={product.name} />
+                            <img src={getImageUrl(product.image)} alt={product.name} />
                             <div className="lookbook-overlay">
                                 <h3>{product.name}</h3>
                                 <span className="price">₹{product.price}</span>

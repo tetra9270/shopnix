@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import QuickView from './QuickView';
+import API from '../services/api';
+import { getImageUrl } from '../utils/helpers';
 import './ProductList.css';
 
 const ProductList = () => {
@@ -22,14 +24,16 @@ const ProductList = () => {
     };
 
     useEffect(() => {
-        // Placeholder fetching data. We will fetch from backend later.
-        const demoProducts = [
-            { _id: '1', name: 'Classic Himalayan Salted', price: 299, category: 'Classic', image: '/images/img1.jpeg' },
-            { _id: '2', name: 'Peri Peri Spicy Fox Nuts', price: 329, category: 'Spicy', image: '/images/img2.jpeg' },
-            { _id: '3', name: 'Butter & Herbs Fox Nuts', price: 349, category: 'Premium', image: '/images/img3.jpeg' },
-            { _id: '4', name: 'Caramel Bliss Fox Nuts', price: 379, category: 'Sweet', image: '/images/img4.jpeg' },
-        ];
-        setProducts(demoProducts);
+        const fetchProducts = async () => {
+            try {
+                const { data } = await API.get('/api/products');
+                // Only show a few products on home page, e.g., first 4
+                setProducts(data.slice(0, 4));
+            } catch (error) {
+                console.error('Failed to fetch products:', error);
+            }
+        };
+        fetchProducts();
     }, []);
 
     return (
@@ -51,7 +55,7 @@ const ProductList = () => {
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
                             <div className="product-image-container">
-                                <img src={product.image} alt={product.name} className="product-image" />
+                                <img src={getImageUrl(product.image)} alt={product.name} className="product-image" />
                                 <div className="overlay-actions">
                                     <button className="icon-btn-round" onClick={() => handleAddToCart(product)} title="Add to Cart"><ShoppingCart size={18} /></button>
                                     <button className="icon-btn-round" onClick={() => openQuickView(product)} title="Quick View"><Eye size={18} /></button>

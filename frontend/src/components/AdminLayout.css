@@ -1,8 +1,8 @@
 .admin-layout {
     display: flex;
     min-height: 100vh;
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: var(--bg-color);
+    color: var(--text-main);
 }
 
 .admin-sidebar {
@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     padding: 2rem 1.5rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
     z-index: 100;
 }
 
@@ -26,15 +26,13 @@
 }
 
 .admin-brand-icon {
-    color: var(--accent-gold);
+    color: var(--primary-color);
 }
 
 .admin-brand-text {
     font-size: 1.25rem;
     font-weight: 700;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-main);
     letter-spacing: -0.02em;
 }
 
@@ -51,7 +49,7 @@
     gap: 1rem;
     padding: 0.875rem 1rem;
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-muted);
     text-decoration: none;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
@@ -60,15 +58,15 @@
 }
 
 .admin-nav-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--text-main);
 }
 
 .admin-nav-item.active {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--accent-gold);
-    border-color: rgba(212, 175, 55, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color);
+    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: none;
 }
 
 .admin-sidebar-footer {
@@ -76,7 +74,7 @@
     flex-direction: column;
     gap: 0.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .back-to-site, .logout-admin {
@@ -88,7 +86,7 @@
 }
 
 .back-to-site:hover {
-    color: var(--accent-gold);
+    color: var(--primary-color);
 }
 
 .logout-admin:hover {
@@ -141,7 +139,7 @@
         align-items: center;
         padding: 1rem;
         border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
     
     .admin-brand {

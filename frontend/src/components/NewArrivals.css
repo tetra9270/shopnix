@@ -345,3 +345,33 @@
         text-align: center;
     }
 }
+
+@media (max-width: 480px) {
+    .spotted-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .new-arrivals-header-content h1 {
+        font-size: 2.2rem;
+    }
+    
+    .fabric-content h3 {
+        font-size: 2.2rem;
+    }
+    
+    .fabric-img-wrap {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2/3;
+    }
+    
+    .fabric-img-wrap.offset {
+        transform: translateY(0);
+        margin-top: 20px;
+    }
+    
+    .fabric-images {
+        flex-direction: column;
+        align-items: center;
+    }
+}

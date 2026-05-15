@@ -14,14 +14,23 @@ import {
 import API from '../services/api';
 import './AdminProducts.css';
 
+const getImageUrl = (url) => {
+    if (!url) return '/images/sample.jpg';
+    if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:')) return url;
+    if (url.startsWith('/uploads')) return `http://localhost:5000${url}`;
+    return url;
+};
+
 const AdminProducts = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [imagePreviews, setImagePreviews] = useState([]);
     const [formData, setFormData] = useState({
-        name: '', price: 0, image: '', category: '', brand: '', countInStock: 0, description: '', modelData: 'default-kurti'
+        name: '', price: 0, discountPrice: 0, image: '', images: [], category: '', brand: '', countInStock: 0, description: '', modelData: 'default-kurti'
     });
 
     useEffect(() => {
@@ -46,29 +55,61 @@ const AdminProducts = () => {
             setFormData({
                 name: product.name,
                 price: product.price,
+                discountPrice: product.discountPrice || 0,
                 image: product.image,
+                images: product.images || [],
                 category: product.category,
                 brand: product.brand,
                 countInStock: product.countInStock || 0,
                 description: product.description,
                 modelData: product.modelData || 'default-kurti'
             });
+            setImagePreviews(product.images || [product.image].filter(Boolean));
         } else {
             setEditingProduct(null);
             setFormData({
-                name: '', price: 0, image: '', category: '', brand: '', countInStock: 0, description: '', modelData: 'default-kurti'
+                name: '', price: 0, discountPrice: 0, image: '', images: [], category: '', brand: '', countInStock: 0, description: '', modelData: 'default-kurti'
             });
+            setImagePreviews([]);
         }
+        setSelectedFiles([]);
         setShowModal(true);
+    };
+
+    const handleFileChange = (e) => {
+        const files = Array.from(e.target.files);
+        setSelectedFiles(files);
+        
+        // Generate previews
+        const previews = files.map(file => URL.createObjectURL(file));
+        setImagePreviews(previews);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            let updatedFormData = { ...formData };
+            
+            // Upload images first if new ones selected
+            if (selectedFiles.length > 0) {
+                const uploadData = new FormData();
+                selectedFiles.forEach(file => {
+                    uploadData.append('images', file);
+                });
+                
+                const uploadRes = await API.post('/api/upload', uploadData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                
+                const uploadedUrls = uploadRes.data.images;
+                updatedFormData.images = uploadedUrls;
+                updatedFormData.image = uploadedUrls[0]; // Set first as main image
+            }
+
             if (editingProduct) {
-                await API.put(`/api/products/${editingProduct}`, formData);
+                await API.put(`/api/products/${editingProduct}`, updatedFormData);
             } else {
-                await API.post('/api/products', formData);
+                await API.post('/api/products', updatedFormData);
             }
             setShowModal(false);
             fetchProducts();
@@ -130,15 +171,18 @@ const AdminProducts = () => {
                             animate={{ opacity: 1, scale: 1 }}
                         >
                             <div className="prod-img-container">
-                                <img src={product.image} alt={product.name} />
+                                <img src={getImageUrl(product.image)} alt={product.name} />
                                 <div className="prod-badge">{product.category}</div>
                             </div>
                             <div className="prod-content">
                                 <h3 className="prod-name">{product.name}</h3>
                                 <div className="prod-meta">
-                                    <span className="prod-price">₹{product.price.toLocaleString()}</span>
-                                    <span className={`prod-stock ${product.countInStock > 0 ? '' : 'low'}`}>
-                                        {product.countInStock} in stock
+                                    <span className="prod-price">
+                                        ₹{product.discountPrice > 0 ? product.discountPrice.toLocaleString() : product.price.toLocaleString()}
+                                        {product.discountPrice > 0 && <span className="original-price">₹{product.price.toLocaleString()}</span>}
+                                    </span>
+                                    <span className={`prod-stock ${product.countInStock > 0 && product.countInStock < 5 ? 'low-stock-warn' : product.countInStock === 0 ? 'out-of-stock' : ''}`}>
+                                        {product.countInStock === 0 ? 'Out of Stock' : `${product.countInStock} in stock`}
                                     </span>
                                 </div>
                                 <div className="prod-actions">
@@ -192,14 +236,28 @@ const AdminProducts = () => {
                                         />
                                     </div>
                                     <div className="form-group">
-                                        <label>Image URL</label>
-                                        <div className="input-with-icon">
-                                            <ImageIcon size={18} />
+                                        <label>Discount Price (₹)</label>
+                                        <input 
+                                            type="number" 
+                                            value={formData.discountPrice}
+                                            onChange={(e) => setFormData({...formData, discountPrice: Number(e.target.value)})}
+                                        />
+                                    </div>
+                                    <div className="form-group full-width">
+                                        <label>Product Images (Select multiple)</label>
+                                        <div className="image-upload-wrapper">
                                             <input 
-                                                type="text" required 
-                                                value={formData.image}
-                                                onChange={(e) => setFormData({...formData, image: e.target.value})}
+                                                type="file" 
+                                                multiple
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                                className="file-input"
                                             />
+                                            <div className="image-previews">
+                                                {imagePreviews.map((src, idx) => (
+                                                    <img key={idx} src={getImageUrl(src)} alt="Preview" className="preview-img" />
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="form-group">

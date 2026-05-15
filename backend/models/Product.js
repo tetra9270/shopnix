@@ -9,6 +9,9 @@ const productSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    images: [{
+        type: String
+    }],
     // For our 3D Model viewer, this could hold the color or style metadata
     modelData: {
         type: String,
@@ -29,6 +32,10 @@ const productSchema = mongoose.Schema({
     price: {
         type: Number,
         required: true,
+        default: 0
+    },
+    discountPrice: {
+        type: Number,
         default: 0
     },
     countInStock: {

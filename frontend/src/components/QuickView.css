@@ -5,31 +5,32 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
     z-index: 1000;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 16px;
 }
 
 .quick-view-modal {
-    background: var(--surface-color);
+    background: var(--surface-color, #fff);
     width: 100%;
-    max-width: 900px;
-    height: 600px;
-    border-radius: 20px;
+    max-width: 920px;
+    max-height: 90vh;
+    border-radius: 24px;
     display: flex;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
 }
 
+/* ---- Close Button ---- */
 .quick-view-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 16px;
+    right: 16px;
     background: white;
     border: none;
     width: 40px;
@@ -39,169 +40,298 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 20;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
     color: var(--text-main);
     transition: all 0.2s ease;
 }
-
 .quick-view-close:hover {
     background: var(--primary-color);
     color: white;
     transform: scale(1.1);
 }
 
+/* ---- Image Column ---- */
 .quick-view-image-column {
     flex: 1;
     background: #f4eee9;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.quick-view-image-column img {
+.quick-view-main-img {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-view-main-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.quick-view-main-img img:hover {
+    transform: scale(1.03);
 }
 
+.qv-discount-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.quick-view-thumbs {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    overflow-x: auto;
+    background: rgba(0,0,0,0.03);
+}
+
+.qv-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+.qv-thumb.active,
+.qv-thumb:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* ---- Info Column ---- */
 .quick-view-info-column {
     flex: 1;
-    padding: 40px;
+    padding: 36px 36px 24px;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    gap: 0;
 }
 
 .quick-view-category {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    font-size: 0.78rem;
+    color: var(--primary-color);
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
+    letter-spacing: 2.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .quick-view-title {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     color: var(--text-main);
-    margin-bottom: 15px;
-    font-weight: 600;
-    line-height: 1.2;
+    margin-bottom: 10px;
+    font-weight: 700;
+    line-height: 1.25;
 }
 
-.quick-view-price-container {
+/* Stars */
+.qv-stars {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+.qv-rating-text {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: 6px;
 }
 
+/* Price */
+.quick-view-price-container {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+}
 .quick-view-price {
     font-size: 1.8rem;
     color: var(--primary-color);
-    font-weight: 700;
+    font-weight: 800;
 }
-
 .quick-view-original-price {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-muted);
     text-decoration: line-through;
 }
 
+/* Description */
 .quick-view-description {
     color: var(--text-muted);
-    line-height: 1.6;
-    margin-bottom: 30px;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
 }
 
-.quick-view-section-title {
-    font-size: 1rem;
-    color: var(--text-main);
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-/* Color Swatches */
-.color-swatches {
+/* Stock */
+.qv-stock-row {
     display: flex;
-    gap: 12px;
-    margin-bottom: 25px;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.88rem;
+    margin-bottom: 14px;
+    color: var(--text-muted);
 }
+.qv-in-stock { color: #2ecc71; font-weight: 600; }
+.qv-out-stock { color: #e74c3c; font-weight: 600; }
 
-.color-swatch {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: all 0.2s;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.color-swatch.active {
-    border-color: var(--primary-color);
-    transform: scale(1.1);
-}
-
-/* Size Selector */
-.size-selector {
+/* Benefits */
+.qv-benefits {
     display: flex;
-    gap: 10px;
-    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
 }
-
-.size-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 8px;
-    border: 1px solid rgba(212, 154, 137, 0.4);
-    background: transparent;
+.qv-benefit {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,0,0,0.04);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
     color: var(--text-main);
     font-weight: 500;
+}
+
+/* Quantity */
+.qv-qty-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.qv-qty-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+.qv-qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.qv-qty-btn {
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.2s;
+    color: var(--text-main);
+    transition: background 0.2s;
+}
+.qv-qty-btn:hover { background: rgba(0,0,0,0.05); }
+.qv-qty-val {
+    width: 40px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    border-left: 1px solid rgba(0,0,0,0.08);
+    border-right: 1px solid rgba(0,0,0,0.08);
+    line-height: 36px;
 }
 
-.size-btn:hover {
-    border-color: var(--primary-color);
-}
-
-.size-btn.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
+/* Actions */
 .quick-view-actions {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     margin-top: auto;
 }
-
-.quick-view-actions .btn {
-    flex: 2;
-    padding: 15px;
-    font-size: 1.1rem;
+.qv-add-btn {
+    flex: 3;
+    padding: 14px;
+    font-size: 1rem;
 }
-
-.quick-view-actions .btn-outline {
+.qv-wish-btn {
     flex: 1;
-    padding: 15px;
+    padding: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* ---- Tablet (768-900px) ---- */
 @media (max-width: 900px) {
     .quick-view-modal {
         flex-direction: column;
-        height: 90vh;
+        max-height: 92vh;
+        border-radius: 20px;
     }
-
     .quick-view-image-column {
-        height: 40%;
-        flex: none;
+        max-height: 42%;
     }
-
     .quick-view-info-column {
-        padding: 25px;
+        padding: 20px 20px 16px;
+    }
+    .quick-view-title {
+        font-size: 1.4rem;
+    }
+}
+
+/* ---- Mobile (max 576px) ---- */
+@media (max-width: 576px) {
+    .quick-view-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+    .quick-view-modal {
+        border-radius: 24px 24px 0 0;
+        max-height: 95vh;
+        height: 95vh;
+    }
+    .quick-view-image-column {
+        max-height: 38%;
+        min-height: 200px;
+    }
+    .quick-view-info-column {
+        padding: 16px;
+        gap: 0;
+    }
+    .quick-view-title {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+    }
+    .quick-view-price {
+        font-size: 1.4rem;
+    }
+    .quick-view-description {
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+    .qv-benefits {
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+    .qv-qty-row {
+        margin-bottom: 14px;
+    }
+    .quick-view-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .qv-wish-btn {
+        flex: none;
+        padding: 10px;
     }
 }

@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ShoppingBag, Heart, Check } from 'lucide-react';
+import { X, ShoppingBag, Heart, Check, Star, Package, Leaf } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { getImageUrl } from '../utils/helpers';
 import './QuickView.css';
 
 const QuickView = ({ product, isOpen, onClose }) => {
-    const [selectedSize, setSelectedSize] = useState('M');
-    const [selectedColor, setSelectedColor] = useState(0);
+    const [selectedQty, setSelectedQty] = useState(1);
     const [added, setAdded] = useState(false);
+    const [activeImg, setActiveImg] = useState(0);
     const { addToCart } = useCart();
 
     const handleAddToCart = () => {
-        const colorName = colors[selectedColor]?.name || '';
-        addToCart({ ...product, id: product._id || product.id }, 1, selectedSize, colorName);
+        addToCart({ ...product, id: product._id || product.id }, selectedQty);
         setAdded(true);
         setTimeout(() => setAdded(false), 2000);
     };
 
-    // Mock colors for the swatch feature
-    const colors = [
-        { name: 'Original', hex: 'transparent', current: true }, // The original image color
-        { name: 'Rose', hex: '#d49a89', current: false },
-        { name: 'Plum', hex: '#4a2c40', current: false }
-    ];
-
     if (!isOpen || !product) return null;
+
+    // Build the image gallery from product.images[] or fall back to product.image
+    const allImages = (product.images && product.images.length > 0)
+        ? product.images
+        : [product.image].filter(Boolean);
+
+    const displayPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
+    const hasDiscount = product.discountPrice > 0 && product.discountPrice < product.price;
+    const discountPct = hasDiscount
+        ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
+        : 0;
 
     return (
         <AnimatePresence>
@@ -41,65 +45,104 @@ const QuickView = ({ product, isOpen, onClose }) => {
                         <X size={20} />
                     </button>
 
+                    {/* Image Column */}
                     <div className="quick-view-image-column">
-                        <img src={product.image} alt={product.name} />
-                    </div>
-
-                    <div className="quick-view-info-column">
-                        <span className="quick-view-category">{product.category || 'Premium Collection'}</span>
-                        <h2 className="quick-view-title">{product.name}</h2>
-
-                        <div className="quick-view-price-container">
-                            <span className="quick-view-price">₹{product.price}</span>
-                            {product.originalPrice && (
-                                <span className="quick-view-original-price">₹{product.originalPrice}</span>
+                        <div className="quick-view-main-img">
+                            <img
+                                src={getImageUrl(allImages[activeImg])}
+                                alt={product.name}
+                            />
+                            {hasDiscount && (
+                                <div className="qv-discount-badge">-{discountPct}%</div>
                             )}
                         </div>
-
-                        <p className="quick-view-description">
-                            Experience the perfect blend of comfort and elegance. Crafted with premium, breathable fabric designed specifically for all-day wear on campus or at festive celebrations. Features reinforced stitching for durability.
-                        </p>
-
-                        <div className="quick-view-options">
-                            <h4 className="quick-view-section-title">Color: {colors[selectedColor].name}</h4>
-                            <div className="color-swatches">
-                                {colors.map((color, idx) => (
-                                    <div
+                        {allImages.length > 1 && (
+                            <div className="quick-view-thumbs">
+                                {allImages.map((img, idx) => (
+                                    <img
                                         key={idx}
-                                        className={`color-swatch ${selectedColor === idx ? 'active' : ''}`}
-                                        style={{
-                                            backgroundColor: color.hex === 'transparent' ? '#f4eee9' : color.hex,
-                                            backgroundImage: color.hex === 'transparent' ? `url(${product.image})` : 'none',
-                                            backgroundSize: 'cover'
-                                        }}
-                                        onClick={() => setSelectedColor(idx)}
-                                        title={color.name}
+                                        src={getImageUrl(img)}
+                                        alt={`${product.name} ${idx + 1}`}
+                                        className={`qv-thumb ${activeImg === idx ? 'active' : ''}`}
+                                        onClick={() => setActiveImg(idx)}
                                     />
                                 ))}
                             </div>
+                        )}
+                    </div>
 
-                            <h4 className="quick-view-section-title">Size</h4>
-                            <div className="size-selector">
-                                {['XS', 'S', 'M', 'L', 'XL'].map(size => (
-                                    <button
-                                        key={size}
-                                        className={`size-btn ${selectedSize === size ? 'active' : ''}`}
-                                        onClick={() => setSelectedSize(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
+                    {/* Info Column */}
+                    <div className="quick-view-info-column">
+                        <span className="quick-view-category">{product.category || 'Premium Makhana'}</span>
+                        <h2 className="quick-view-title">{product.name}</h2>
+
+                        {/* Stars */}
+                        <div className="qv-stars">
+                            {[1,2,3,4,5].map(s => (
+                                <Star key={s} size={14} fill={s <= 4 ? 'var(--primary-color)' : 'none'} color="var(--primary-color)" />
+                            ))}
+                            <span className="qv-rating-text">4.0 (128 reviews)</span>
+                        </div>
+
+                        {/* Price */}
+                        <div className="quick-view-price-container">
+                            <span className="quick-view-price">₹{displayPrice?.toLocaleString()}</span>
+                            {hasDiscount && (
+                                <span className="quick-view-original-price">₹{product.price?.toLocaleString()}</span>
+                            )}
+                        </div>
+
+                        {/* Description */}
+                        <p className="quick-view-description">
+                            {product.description || 'A premium quality Makhana product, slow-roasted in small batches with natural spices and zero preservatives. A healthy, delicious snack for the whole family.'}
+                        </p>
+
+                        {/* Stock info */}
+                        <div className="qv-stock-row">
+                            <Package size={15} />
+                            {product.countInStock > 0
+                                ? <span className="qv-in-stock">In Stock ({product.countInStock} available)</span>
+                                : <span className="qv-out-stock">Out of Stock</span>
+                            }
+                        </div>
+
+                        {/* Key Benefits */}
+                        <div className="qv-benefits">
+                            <div className="qv-benefit"><Leaf size={14} /> 100% Natural</div>
+                            <div className="qv-benefit"><Leaf size={14} /> Zero Preservatives</div>
+                            <div className="qv-benefit"><Leaf size={14} /> Slow Roasted</div>
+                        </div>
+
+                        {/* Quantity */}
+                        <div className="qv-qty-row">
+                            <span className="qv-qty-label">Quantity:</span>
+                            <div className="qv-qty-controls">
+                                <button
+                                    className="qv-qty-btn"
+                                    onClick={() => setSelectedQty(q => Math.max(1, q - 1))}
+                                >−</button>
+                                <span className="qv-qty-val">{selectedQty}</span>
+                                <button
+                                    className="qv-qty-btn"
+                                    onClick={() => setSelectedQty(q => Math.min(product.countInStock || 10, q + 1))}
+                                >+</button>
                             </div>
                         </div>
 
+                        {/* Actions */}
                         <div className="quick-view-actions">
-                            <button className="btn" onClick={handleAddToCart} style={{ background: added ? '#5a7a5a' : '' }}>
+                            <button
+                                className="btn qv-add-btn"
+                                onClick={handleAddToCart}
+                                disabled={product.countInStock === 0}
+                                style={{ background: added ? '#5a7a5a' : '' }}
+                            >
                                 {added
-                                    ? <><Check size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} /> Added!</>
-                                    : <><ShoppingBag size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} /> Add to Bag</>
+                                    ? <><Check size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />Added!</>
+                                    : <><ShoppingBag size={18} style={{ marginRight: '8px', verticalAlign: 'middle' }} />Add to Bag</>
                                 }
                             </button>
-                            <button className="btn btn-outline" style={{ padding: '0 20px' }}>
+                            <button className="btn btn-outline qv-wish-btn">
                                 <Heart size={20} />
                             </button>
                         </div>

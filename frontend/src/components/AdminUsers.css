@@ -16,7 +16,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     font-size: 0.85rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -26,12 +26,12 @@
     grid-template-columns: 1.5fr 1.5fr 1fr 1fr 0.5fr;
     padding: 1.25rem 1.5rem;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     transition: background 0.3s;
 }
 
 .user-list-row:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 .col-user {
@@ -44,11 +44,11 @@
     width: 36px;
     height: 36px;
     border-radius: 10px;
-    background: var(--accent-gradient);
+    background: linear-gradient(135deg, var(--text-main) 0%, var(--primary-color) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: #fff;
     font-weight: 700;
     font-size: 0.9rem;
 }
@@ -61,7 +61,7 @@
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-muted);
     font-size: 0.9rem;
 }
 
@@ -77,15 +77,15 @@
 }
 
 .role-chip.admin {
-    background: rgba(212, 175, 55, 0.1);
-    color: var(--accent-gold);
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .role-chip.member {
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.02);
+    color: var(--text-main);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .col-actions {
@@ -115,14 +115,14 @@
 
 .admin-action-placeholder {
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--text-muted);
     font-style: italic;
 }
 
 .no-users-found {
     padding: 4rem;
     text-align: center;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     font-style: italic;
 }
 

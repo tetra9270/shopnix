@@ -21,7 +21,12 @@ const LoginSignup = () => {
         // Check if already logged in
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
-            navigate('/');
+            const parsed = JSON.parse(userInfo);
+            if (parsed.isAdmin) {
+                navigate('/admin/dashboard');
+            } else {
+                navigate('/');
+            }
         }
     }, [navigate]);
 
@@ -48,7 +53,11 @@ const LoginSignup = () => {
 
             // Navigate and reload after 1.8 seconds
             setTimeout(() => {
-                navigate('/');
+                if (data.isAdmin) {
+                    navigate('/admin/dashboard');
+                } else {
+                    navigate('/');
+                }
                 window.location.reload();
             }, 1800);
 

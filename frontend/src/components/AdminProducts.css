@@ -5,7 +5,7 @@
 }
 
 .subtitle {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     font-size: 0.95rem;
 }
 
@@ -53,12 +53,12 @@
     top: 1rem;
     right: 1rem;
     padding: 0.4rem 0.8rem;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(8px);
     border-radius: 100px;
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--accent-gold);
+    color: var(--text-main);
 }
 
 .prod-content {
@@ -83,12 +83,12 @@
 .prod-price {
     font-size: 1.25rem;
     font-weight: 800;
-    color: var(--accent-gold);
+    color: var(--primary-color);
 }
 
 .prod-stock {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
 }
 
 .prod-stock.low {
@@ -109,9 +109,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.02);
+    color: var(--text-main);
     cursor: pointer;
     transition: all 0.3s;
 }
@@ -126,7 +126,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
@@ -159,12 +159,12 @@
 .close-btn {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     cursor: pointer;
     transition: color 0.3s;
 }
 
-.close-btn:hover { color: var(--text-primary); }
+.close-btn:hover { color: var(--text-main); }
 
 .product-form {
     display: flex;
@@ -191,22 +191,22 @@
 .form-group label {
     font-size: 0.85rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
 }
 
 .form-group input, .form-group textarea {
     padding: 0.85rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-    color: var(--text-primary);
+    color: var(--text-main);
     font-size: 1rem;
 }
 
 .form-group input:focus, .form-group textarea:focus {
     outline: none;
-    border-color: var(--accent-gold);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-color);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .input-with-icon {
@@ -218,7 +218,7 @@
 .input-with-icon svg {
     position: absolute;
     left: 1rem;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
 }
 
 .input-with-icon input {
@@ -235,10 +235,10 @@
 
 .cancel-pill {
     padding: 0.75rem 2rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 100px;
-    color: var(--text-primary);
+    color: var(--text-main);
     cursor: pointer;
     font-weight: 500;
 }
@@ -247,4 +247,52 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.image-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+}
+
+.file-input {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.image-previews {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.preview-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.original-price {
+    font-size: 0.9rem;
+    text-decoration: line-through;
+    color: var(--text-muted);
+    margin-left: 0.5rem;
+    font-weight: 400;
+}
+
+.prod-stock.low-stock-warn {
+    color: #f39c12;
+    font-weight: 600;
+}
+
+.prod-stock.out-of-stock {
+    color: #e74c3c;
+    font-weight: 600;
 }

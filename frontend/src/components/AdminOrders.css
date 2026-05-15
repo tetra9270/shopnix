@@ -32,7 +32,7 @@
 .search-box input {
     background: none;
     border: none;
-    color: var(--text-primary);
+    color: var(--text-main);
     font-size: 0.9rem;
     width: 100%;
 }
@@ -45,9 +45,9 @@
     width: 42px;
     height: 42px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-main);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,8 +56,8 @@
 }
 
 .refresh-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--accent-gold);
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
 }
 
 .spinning {
@@ -79,9 +79,9 @@
 .filter-tab {
     padding: 0.5rem 1.25rem;
     border-radius: 100px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.6);
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-muted);
     cursor: pointer;
     font-size: 0.85rem;
     transition: all 0.3s;
@@ -89,14 +89,14 @@
 }
 
 .filter-tab:hover {
-    background: rgba(255, 255, 255, 0.07);
-    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.07);
+    color: var(--text-main);
 }
 
 .filter-tab.active {
-    background: var(--accent-gold);
-    color: #000;
-    border-color: var(--accent-gold);
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
 }
 
 .orders-table-container {
@@ -113,16 +113,16 @@
 .orders-table th {
     padding: 1.25rem 1.5rem;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .orders-table td {
     padding: 1.25rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     font-size: 0.95rem;
 }
 
@@ -131,17 +131,17 @@
 }
 
 .order-row:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.02);
 }
 
 .order-row.expanded {
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(0, 0, 0, 0.01);
 }
 
 .id-cell {
     font-family: monospace;
     font-weight: 600;
-    color: var(--accent-gold);
+    color: var(--primary-color);
 }
 
 .user-info {
@@ -164,9 +164,9 @@
 }
 
 .status-select {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-main);
     padding: 0.4rem 0.6rem;
     border-radius: 8px;
     font-size: 0.85rem;
@@ -175,24 +175,24 @@
 
 .status-select:focus {
     outline: none;
-    border-color: var(--accent-gold);
+    border-color: var(--primary-color);
 }
 
 .expand-btn {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     cursor: pointer;
     transition: color 0.3s;
 }
 
 .expand-btn:hover {
-    color: var(--text-primary);
+    color: var(--text-main);
 }
 
 /* Details Pane */
 .order-details-pane {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.02);
     margin: 0 1.5rem 1.5rem;
     border-radius: 16px;
     overflow: hidden;
@@ -210,7 +210,7 @@
     align-items: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: var(--accent-gold);
+    color: var(--primary-color);
     margin-bottom: 1.25rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -243,14 +243,14 @@
 
 .item-meta {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     margin: 0.2rem 0 0;
 }
 
 .shipping-info p {
     margin: 0.25rem 0;
     font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-muted);
 }
 
 .payment-method-tag {
@@ -258,7 +258,7 @@
     font-size: 0.8rem;
     display: inline-block;
     padding: 0.2rem 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
 }
 
@@ -275,7 +275,7 @@
 }
 
 .timeline-item span:first-child {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
 }
 
 .timeline-item.paid {
@@ -285,7 +285,7 @@
 .no-results {
     padding: 4rem;
     text-align: center;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     font-style: italic;
 }
 

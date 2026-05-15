@@ -1,4 +1,5 @@
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -40,6 +41,18 @@ const createOrder = async (req, res) => {
             paidAt: paymentMethod === 'Cash on Delivery' ? null : Date.now(),
             status: 'Pending'
         });
+
+        // Deduct stock
+        for (const item of order.orderItems) {
+            const product = await Product.findById(item.product);
+            if (product) {
+                if (product.countInStock < item.qty) {
+                    return res.status(400).json({ message: `Not enough stock for ${product.name}` });
+                }
+                product.countInStock -= item.qty;
+                await product.save();
+            }
+        }
 
         const createdOrder = await order.save();
 
@@ -109,6 +122,15 @@ const cancelOrder = async (req, res) => {
         order.status = 'Cancelled';
         order.cancellationReason = reason || 'Cancelled by customer';
         const updatedOrder = await order.save();
+
+        // Restore stock
+        for (const item of order.orderItems) {
+            const product = await Product.findById(item.product);
+            if (product) {
+                product.countInStock += item.qty;
+                await product.save();
+            }
+        }
 
         res.json({ message: 'Order cancelled successfully', order: updatedOrder });
     } catch (error) {

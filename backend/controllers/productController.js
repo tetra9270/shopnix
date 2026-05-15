@@ -50,15 +50,19 @@ const deleteProduct = async (req, res) => {
 // @access  Private/Admin
 const createProduct = async (req, res) => {
     try {
+        const { name, price, discountPrice, description, image, images, brand, category, countInStock, modelData } = req.body;
+
         const product = new Product({
-            name: 'Sample Name',
-            price: 0,
-            brand: 'Sample Brand',
-            category: 'Sample Category',
-            countInStock: 0,
-            description: 'Sample Description',
-            image: '/images/sample.jpg',
-            modelData: 'default-kurti'
+            name: name || 'Sample Name',
+            price: price || 0,
+            discountPrice: discountPrice || 0,
+            brand: brand || 'Sample Brand',
+            category: category || 'Sample Category',
+            countInStock: countInStock || 0,
+            description: description || 'Sample Description',
+            image: image || '/images/sample.jpg',
+            images: images || [],
+            modelData: modelData || 'default-kurti'
         });
 
         const createdProduct = await product.save();
@@ -73,17 +77,19 @@ const createProduct = async (req, res) => {
 // @access  Private/Admin
 const updateProduct = async (req, res) => {
     try {
-        const { name, price, description, image, brand, category, countInStock, modelData } = req.body;
+        const { name, price, discountPrice, description, image, images, brand, category, countInStock, modelData } = req.body;
         const product = await Product.findById(req.params.id);
 
         if (product) {
             product.name = name || product.name;
-            product.price = price || product.price;
+            product.price = price !== undefined ? price : product.price;
+            product.discountPrice = discountPrice !== undefined ? discountPrice : product.discountPrice;
             product.description = description || product.description;
             product.image = image || product.image;
+            product.images = images || product.images;
             product.brand = brand || product.brand;
             product.category = category || product.category;
-            product.countInStock = countInStock || product.countInStock;
+            product.countInStock = countInStock !== undefined ? countInStock : product.countInStock;
             product.modelData = modelData || product.modelData;
 
             const updatedProduct = await product.save();

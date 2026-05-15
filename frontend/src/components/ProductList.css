@@ -136,3 +136,35 @@
     font-weight: 700;
     color: var(--text-main);
 }
+
+@media (max-width: 768px) {
+    .products-section {
+        padding: 50px 0;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    .product-image-container {
+        height: 200px;
+    }
+
+    .product-info {
+        padding: 12px;
+    }
+
+    .product-info h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+    }
+}

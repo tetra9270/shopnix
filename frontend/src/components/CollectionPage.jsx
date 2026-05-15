@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Eye, ChevronRight, SlidersHorizontal, ChevronDown, Search, Truck, ShieldCheck } from 'lucide-react';
 import QuickView from './QuickView';
+import API from '../services/api';
+import { getImageUrl } from '../utils/helpers';
 import './ProductList.css';
 import './CollectionPage.css';
 import './CollectionExtras.css';
@@ -26,16 +28,7 @@ const collectionData = {
     'all': {
         title: "All Flavours",
         description: "Explore our entire range of premium roasted fox nuts — from classic salted to bold spicy and sweet indulgences.",
-        products: [
-            { _id: '1', name: 'Classic Himalayan Salted', price: 299, originalPrice: 399, category: 'Anarkali', badge: 'sale', image: '/images/img1.jpeg', hoverImage: '/images/img2.jpeg' },
-            { _id: '2', name: 'Peri Peri Spicy', price: 329, category: 'Straight', badge: 'bestseller', image: '/images/img2.jpeg', hoverImage: '/images/img3.jpeg' },
-            { _id: '3', name: 'Butter & Herbs', price: 349, category: 'A-Line', badge: 'new', image: '/images/img3.jpeg', hoverImage: '/images/img4.jpeg' },
-            { _id: '4', name: 'Caramel Bliss', price: 379, category: 'Georgette', badge: 'bestseller', image: '/images/img4.jpeg', hoverImage: '/images/img5.jpeg' },
-            { _id: '5', name: 'Cheese & Onion', price: 349, category: 'Straight', badge: 'sale', image: '/images/img5.jpeg', hoverImage: '/images/img1.jpeg' },
-            { _id: '6', name: 'Dark Chocolate Drizzle', price: 399, category: 'Anarkali', badge: 'new', image: '/images/img1.jpeg', hoverImage: '/images/img3.jpeg' },
-            { _id: '7', name: 'Tangy Tamarind Twist', price: 329, category: 'A-Line', originalPrice: 399, badge: 'sale', image: '/images/img2.jpeg', hoverImage: '/images/img4.jpeg' },
-            { _id: '8', name: 'Coconut Jaggery Crunch', price: 369, category: 'Georgette', image: '/images/img3.jpeg', hoverImage: '/images/img5.jpeg' },
-        ]
+        products: []
     }
 };
 
@@ -51,16 +44,26 @@ const CollectionPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        // Default to 'all' if no collectionId provided (e.g. /collection route)
-        const id = collectionId || 'all';
-        const data = { ...collectionData[id] } || { ...collectionData['all'] }; // Create a copy to avoid modifying original
+        const fetchProducts = async () => {
+            try {
+                const { data } = await API.get('/api/products');
+                const id = collectionId || 'all';
+                const baseData = { ...collectionData[id] } || { ...collectionData['all'] };
+                
+                let filteredProducts = data;
+                if (id === 'campus-casuals') filteredProducts = data.filter(p => p.price < 350);
+                if (id === 'festive-vibes') filteredProducts = data.filter(p => p.price >= 350);
+                if (id === 'party-ready') filteredProducts = data.filter(p => p.category === 'Premium' || p.category === 'Sweet');
 
-        // Setup mock data for sub-collections dynamically from 'all'
-        if (id === 'campus-casuals') data.products = collectionData['all'].products.filter(p => p.price < 1500);
-        if (id === 'festive-vibes') data.products = collectionData['all'].products.filter(p => p.price > 2000);
-        if (id === 'party-ready') data.products = collectionData['all'].products.filter(p => p.category === 'Georgette' || p.category === 'A-Line');
-
-        setCollection(data);
+                setCollection({
+                    ...baseData,
+                    products: filteredProducts
+                });
+            } catch (error) {
+                console.error("Failed to fetch products", error);
+            }
+        };
+        fetchProducts();
 
         // Reset filters when collection changes
         setSearchQuery('');
@@ -96,7 +99,7 @@ const CollectionPage = () => {
 
     if (!collection) return <div className="container" style={{ paddingTop: '120px' }}>Loading...</div>;
 
-    const categories = ['All', 'Anarkali', 'Straight', 'A-Line', 'Georgette'];
+    const categories = ['All', 'Classic', 'Spicy', 'Sweet', 'Premium', 'Gourmet'];
 
     return (
         <div className="collection-page">
@@ -135,21 +138,21 @@ const CollectionPage = () => {
                     <div className="trending-categories-wrapper">
                         <div className="trending-categories">
                             {/* Original Set */}
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('Anarkali')}>
-                                <img src="/images/img1.jpeg" alt="Anarkali" />
-                                <div className="trending-category-overlay"><span>Anarkali</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Classic')}>
+                                <img src="/images/img1.jpeg" alt="Classic" />
+                                <div className="trending-category-overlay"><span>Classic</span></div>
                             </div>
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('Straight')}>
-                                <img src="/images/img2.jpeg" alt="Straight Sets" />
-                                <div className="trending-category-overlay"><span>Straight Sets</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Spicy')}>
+                                <img src="/images/img2.jpeg" alt="Spicy" />
+                                <div className="trending-category-overlay"><span>Spicy</span></div>
                             </div>
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('A-Line')}>
-                                <img src="/images/img3.jpeg" alt="A-Line" />
-                                <div className="trending-category-overlay"><span>A-Line</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Sweet')}>
+                                <img src="/images/img3.jpeg" alt="Sweet" />
+                                <div className="trending-category-overlay"><span>Sweet</span></div>
                             </div>
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('Georgette')}>
-                                <img src="/images/img4.jpeg" alt="Georgette" />
-                                <div className="trending-category-overlay"><span>Georgette</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Premium')}>
+                                <img src="/images/img4.jpeg" alt="Premium" />
+                                <div className="trending-category-overlay"><span>Premium</span></div>
                             </div>
                             <div className="trending-category-card" onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}>
                                 <img src="/images/img5.jpeg" alt="View All" />
@@ -157,21 +160,21 @@ const CollectionPage = () => {
                             </div>
 
                             {/* Duplicated Set for Infinite Marquee effect */}
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('Anarkali')}>
-                                <img src="/images/img1.jpeg" alt="Anarkali" />
-                                <div className="trending-category-overlay"><span>Anarkali</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Classic')}>
+                                <img src="/images/img1.jpeg" alt="Classic" />
+                                <div className="trending-category-overlay"><span>Classic</span></div>
                             </div>
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('Straight')}>
-                                <img src="/images/img2.jpeg" alt="Straight Sets" />
-                                <div className="trending-category-overlay"><span>Straight Sets</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Spicy')}>
+                                <img src="/images/img2.jpeg" alt="Spicy" />
+                                <div className="trending-category-overlay"><span>Spicy</span></div>
                             </div>
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('A-Line')}>
-                                <img src="/images/img3.jpeg" alt="A-Line" />
-                                <div className="trending-category-overlay"><span>A-Line</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Sweet')}>
+                                <img src="/images/img3.jpeg" alt="Sweet" />
+                                <div className="trending-category-overlay"><span>Sweet</span></div>
                             </div>
-                            <div className="trending-category-card" onClick={() => setSelectedCategory('Georgette')}>
-                                <img src="/images/img4.jpeg" alt="Georgette" />
-                                <div className="trending-category-overlay"><span>Georgette</span></div>
+                            <div className="trending-category-card" onClick={() => setSelectedCategory('Premium')}>
+                                <img src="/images/img4.jpeg" alt="Premium" />
+                                <div className="trending-category-overlay"><span>Premium</span></div>
                             </div>
                             <div className="trending-category-card" onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}>
                                 <img src="/images/img5.jpeg" alt="View All" />
@@ -187,8 +190,8 @@ const CollectionPage = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                    <h1 className="title-gradient" style={{ fontSize: '3.5rem', marginBottom: '16px' }}>{collection.title}</h1>
-                    <p style={{ fontSize: '1.2rem', color: 'var(--text-muted)' }}>{collection.description}</p>
+                    <h1 className="title-gradient collection-title">{collection.title}</h1>
+                    <p className="collection-description">{collection.description}</p>
                 </motion.div>
 
                 {/* Shopping Toolbar (Filter, Search & Sort) */}
@@ -280,9 +283,9 @@ const CollectionPage = () => {
                                         </div>
                                     )}
 
-                                    <img src={product.image} alt={product.name} className="product-image main-image" />
-                                    {product.hoverImage && (
-                                        <img src={product.hoverImage} alt={`${product.name} modeled`} className="product-image hover-image" />
+                                    <img src={getImageUrl(product.image)} alt={product.name} className="product-image main-image" />
+                                    {product.images && product.images.length > 0 && (
+                                        <img src={getImageUrl(product.images[0])} alt={`${product.name} alternate`} className="product-image hover-image" />
                                     )}
 
                                     <div className="overlay-actions" onClick={(e) => e.stopPropagation()}>
