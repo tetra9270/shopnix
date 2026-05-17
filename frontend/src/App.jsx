@@ -10,6 +10,7 @@ import Testimonials from './components/Testimonials';
 import Footer from './components/Footer';
 import CollectionPage from './components/CollectionPage';
 import NewArrivals from './components/NewArrivals';
+import FoxnutsShowcase from './components/FoxnutsShowcase';
 import About from './components/About';
 import Contact from './components/Contact';
 import LoginSignup from './components/LoginSignup';
@@ -29,6 +30,7 @@ function HomePage() {
   return (
     <>
       <Hero3D />
+      <FoxnutsShowcase />
       <Features />
       <ShopByOccasion />
       <ProductList />

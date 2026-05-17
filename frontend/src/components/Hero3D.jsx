@@ -9,7 +9,7 @@ const slides = [
         id: 1,
         tagline: "Nature's Superfood.",
         subtitle: "Discover our premium Fox Nuts (Makhana) — 100% natural, roasted to perfection. The healthiest snack you'll ever love.",
-        image: "/images/img1.jpeg",
+        image: "/images/slide1.png",
         btnText: "Shop Now",
         link: "/collection/all"
     },
@@ -17,25 +17,25 @@ const slides = [
         id: 2,
         tagline: "Guilt-Free Snacking.",
         subtitle: "Low calorie, high protein, and incredibly crunchy. Our fox nuts are the perfect snack for every health-conscious foodie.",
-        image: "/images/img2.jpeg",
+        image: "/images/slide2.png",
         btnText: "View Flavours",
-        link: "/collection/campus-casuals"
+        link: "/collection/all"
     },
     {
         id: 3,
         tagline: "Rich in Goodness.",
         subtitle: "Packed with antioxidants, calcium, and magnesium. Every handful of our fox nuts fuels your body and delights your taste buds.",
-        image: "/images/img3.jpeg",
+        image: "/images/slide3.png",
         btnText: "Shop Classic",
-        link: "/collection/festive-vibes"
+        link: "/collection/all"
     },
     {
         id: 4,
         tagline: "Bold New Flavours.",
         subtitle: "From tangy peri-peri to buttery caramel — explore our exciting range of flavoured fox nuts crafted for adventurous snackers.",
-        image: "/images/img4.jpeg",
+        image: "/images/slide4.png",
         btnText: "Explore Flavours",
-        link: "/collection/party-ready"
+        link: "/collection/all"
     }
 ];
 

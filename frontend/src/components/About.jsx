@@ -84,7 +84,7 @@ const About = () => {
                 transition={{ duration: 0.9 }}
             >
                 <div className="farmer-image-wrap">
-                    <img src="/images/farmer.jpeg" alt="Ahmad - Makhana Farmer from Bihar" className="farmer-img" />
+                    <img src="/images/ahmed.jpg" alt="Ahmed - Shopnix Foxnuts Brand Ambassador" className="farmer-img" />
                 </div>
                 <div className="farmer-info">
                     <div className="farmer-badge">🌿 Direct From Farm</div>

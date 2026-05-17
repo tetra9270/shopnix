@@ -7,23 +7,23 @@ import './Testimonials.css';
 const testimonials = [
     {
         id: 1,
-        name: "Priya S.",
-        college: "Delhi University",
-        text: "The fabric is incredibly soft! I wore the Anarkali to my college fest and got so many compliments. Shahi Adaa is my new favorite.",
+        name: "Rahul K.",
+        location: "Mumbai, Maharashtra",
+        text: "These Shopnix Foxnuts are absolutely incredible! Super light, perfectly roasted, and the peri-peri flavour is addictive. Best healthy snack I've had — can't stop at one handful!",
         rating: 5
     },
     {
         id: 2,
-        name: "Ananya M.",
-        college: "NIFT Mumbai",
-        text: "Finally, a brand that understands hostel life. The delivery was super quick to my campus, and the fit was absolutely flawless.",
+        name: "Shreya P.",
+        location: "Bengaluru, Karnataka",
+        text: "I've tried so many makhana brands, but Shopnix is on another level. The crunch is perfect, zero oiliness, and the packaging keeps them fresh for weeks. My whole family is hooked!",
         rating: 5
     },
     {
         id: 3,
-        name: "Sneha V.",
-        college: "Christ University",
-        text: "Obsessed with the rose gold detailing. It's so elegant and high quality for the price. I've already ordered three more casual kurtis!",
+        name: "Arjun M.",
+        location: "Delhi, NCR",
+        text: "Finally a guilt-free snack that actually tastes amazing! The caramel foxnuts are my absolute favourite. Ordered 3 bags in the first week itself. Fast delivery too — highly recommend!",
         rating: 5
     }
 ];
@@ -39,8 +39,8 @@ const Testimonials = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                    <h2 className="title-gradient">Love Letters</h2>
-                    <p>Don't just take our word for it. Hear from the girls who love Shahi Adaa.</p>
+                    <h2 className="title-gradient">What Snackers Say</h2>
+                    <p>Don't just take our word for it. Hear from people who can't put down Shopnix Foxnuts.</p>
                 </motion.div>
 
                 <div className="testimonials-grid">
@@ -86,7 +86,7 @@ const Testimonials = () => {
                             <p className="review-text">"{review.text}"</p>
                             <div className="reviewer-info">
                                 <h4>{review.name}</h4>
-                                <span>{review.college}</span>
+                                <span>{review.location}</span>
                             </div>
                         </motion.div>
                     ))}

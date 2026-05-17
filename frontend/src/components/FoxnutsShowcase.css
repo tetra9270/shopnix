@@ -1,0 +1,253 @@
+/* ===== Foxnuts Showcase Section ===== */
+.foxnuts-showcase {
+    position: relative;
+    padding: 100px 20px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1208 40%, #0d0b06 100%);
+    z-index: 2;
+}
+
+.foxnuts-showcase-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+/* ===== Left: Image ===== */
+.foxnuts-img-wrap {
+    flex: 0 0 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.foxnuts-main-img {
+    width: 100%;
+    max-width: 520px;
+    border-radius: 28px;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    filter: drop-shadow(0 30px 60px rgba(212, 160, 50, 0.3));
+}
+
+.foxnuts-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(212, 160, 50, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* ===== Right: Content ===== */
+.foxnuts-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.foxnuts-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #2d6a4f, #40916c);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    box-shadow: 0 4px 15px rgba(45, 106, 79, 0.4);
+}
+
+.foxnuts-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.2rem;
+    line-height: 1.2;
+    color: #f5f5f0;
+    margin: 0;
+}
+
+.foxnuts-title-accent {
+    background: linear-gradient(135deg, #d4a017, #f0c040, #d4a017);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.foxnuts-desc {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #c5bfb0;
+    margin: 0;
+}
+
+.foxnuts-desc strong {
+    color: #f0c040;
+    font-weight: 700;
+}
+
+/* ===== Stats ===== */
+.foxnuts-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.foxnuts-stat {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 160, 50, 0.2);
+    border-radius: 16px;
+    padding: 18px 12px;
+    text-align: center;
+    cursor: default;
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.foxnuts-stat:hover {
+    background: rgba(212, 160, 50, 0.1);
+    border-color: rgba(212, 160, 50, 0.5);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #f0c040;
+    letter-spacing: 0.5px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #9a9080;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* ===== Action Buttons ===== */
+.foxnuts-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.foxnuts-btn-primary {
+    background: linear-gradient(135deg, #d4a017, #f0c040);
+    color: #1a1208;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 25px rgba(212, 160, 50, 0.4);
+}
+
+.foxnuts-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(212, 160, 50, 0.55);
+}
+
+.foxnuts-btn-outline {
+    background: transparent;
+    color: #f0c040;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 2px solid rgba(240, 192, 64, 0.5);
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.foxnuts-btn-outline:hover {
+    transform: translateY(-3px);
+    border-color: #f0c040;
+    background: rgba(240, 192, 64, 0.08);
+}
+
+/* ===== Background Decorations ===== */
+.showcase-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.showcase-bg-circle.c1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212, 160, 50, 0.06) 0%, transparent 70%);
+    top: -200px;
+    right: -200px;
+}
+
+.showcase-bg-circle.c2 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(45, 106, 79, 0.08) 0%, transparent 70%);
+    bottom: -150px;
+    left: -100px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+    .foxnuts-showcase-inner {
+        gap: 50px;
+    }
+
+    .foxnuts-title {
+        font-size: 2.6rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .foxnuts-showcase {
+        padding: 70px 20px;
+    }
+
+    .foxnuts-showcase-inner {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .foxnuts-img-wrap {
+        flex: none;
+        width: 100%;
+    }
+
+    .foxnuts-main-img {
+        max-width: 380px;
+    }
+
+    .foxnuts-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .foxnuts-title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .foxnuts-title {
+        font-size: 1.9rem;
+    }
+
+    .foxnuts-btn-primary,
+    .foxnuts-btn-outline {
+        width: 100%;
+        text-align: center;
+    }
+}
