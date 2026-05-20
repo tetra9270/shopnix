@@ -51,8 +51,8 @@ const CollectionPage = () => {
                 const baseData = { ...collectionData[id] } || { ...collectionData['all'] };
                 
                 let filteredProducts = data;
-                if (id === 'campus-casuals') filteredProducts = data.filter(p => p.price < 350);
-                if (id === 'festive-vibes') filteredProducts = data.filter(p => p.price >= 350);
+                if (id === 'campus-casuals') filteredProducts = data.filter(p => (p.discountPrice > 0 ? p.discountPrice : p.price) < 350);
+                if (id === 'festive-vibes') filteredProducts = data.filter(p => (p.discountPrice > 0 ? p.discountPrice : p.price) >= 350);
                 if (id === 'party-ready') filteredProducts = data.filter(p => p.category === 'Premium' || p.category === 'Sweet');
 
                 setCollection({
@@ -89,9 +89,9 @@ const CollectionPage = () => {
 
         // 3. Sorting
         if (sortOption === 'price-low') {
-            result.sort((a, b) => a.price - b.price);
+            result.sort((a, b) => (a.discountPrice > 0 ? a.discountPrice : a.price) - (b.discountPrice > 0 ? b.discountPrice : b.price));
         } else if (sortOption === 'price-high') {
-            result.sort((a, b) => b.price - a.price);
+            result.sort((a, b) => (b.discountPrice > 0 ? b.discountPrice : b.price) - (a.discountPrice > 0 ? a.discountPrice : a.price));
         }
 
         return result;
@@ -297,9 +297,9 @@ const CollectionPage = () => {
                                     {product.category && <span className="product-category">{product.category}</span>}
                                     <h3>{product.name}</h3>
                                     <div className="price-container" style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '5px' }}>
-                                        <span className="product-price">₹{product.price}</span>
-                                        {product.originalPrice && (
-                                            <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem' }}>₹{product.originalPrice}</span>
+                                        <span className="product-price">₹{product.discountPrice > 0 ? product.discountPrice : product.price}</span>
+                                        {product.discountPrice > 0 && (
+                                            <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem' }}>₹{product.price}</span>
                                         )}
                                     </div>
                                 </div>

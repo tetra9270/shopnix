@@ -42,7 +42,7 @@ export const CartProvider = ({ children }) => {
                 product: product.id || product._id || String(product.id),
                 name: product.name || product.title,
                 image: product.image || product.images?.[0] || '',
-                price: parseFloat(String(product.price).replace(/[^0-9.]/g, '')),
+                price: parseFloat(String(product.discountPrice > 0 ? product.discountPrice : product.price).replace(/[^0-9.]/g, '')),
                 qty,
                 size,
                 color

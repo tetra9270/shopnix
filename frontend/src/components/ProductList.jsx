@@ -64,7 +64,10 @@ const ProductList = () => {
                             <div className="product-info">
                                 <span className="product-category">{product.category}</span>
                                 <h3>{product.name}</h3>
-                                <p className="product-price">₹{product.price}</p>
+                                <p className="product-price">
+                                    ₹{product.discountPrice > 0 ? product.discountPrice : product.price}
+                                    {product.discountPrice > 0 && <span className="original-price" style={{ textDecoration: 'line-through', color: 'var(--text-muted)', fontSize: '0.9rem', marginLeft: '10px' }}>₹{product.price}</span>}
+                                </p>
                             </div>
                         </motion.div>
                     ))}

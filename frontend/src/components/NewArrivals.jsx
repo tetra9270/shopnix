@@ -106,7 +106,10 @@ const NewArrivals = () => {
                             <img src={getImageUrl(product.image)} alt={product.name} />
                             <div className="lookbook-overlay">
                                 <h3>{product.name}</h3>
-                                <span className="price">₹{product.price}</span>
+                                <span className="price">
+                                    ₹{product.discountPrice > 0 ? product.discountPrice : product.price}
+                                    {product.discountPrice > 0 && <span className="original-price" style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem', marginLeft: '8px' }}>₹{product.price}</span>}
+                                </span>
                                 <button className="shop-btn">
                                     <ShoppingBag size={16} style={{ display: 'inline', marginRight: '5px', verticalAlign: 'text-bottom' }} />
                                     Quick Shop
