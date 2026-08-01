@@ -11,17 +11,17 @@ const PORT = process.env.PORT || 5000;
 
 // Allow requests from Vercel frontend and localhost dev servers
 const allowedOrigins = [
+    'https://shopnix-ten.vercel.app',
     'https://shopnix-xi.vercel.app',
     'http://localhost:5173',
     'http://localhost:3000',
-    // Add any other Vercel preview URLs here if needed
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
         // Allow requests with no origin (like curl, Postman, mobile apps)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) return callback(null, true);
+        if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) return callback(null, true);
         return callback(new Error(`CORS blocked: ${origin}`), false);
     },
     credentials: true,
